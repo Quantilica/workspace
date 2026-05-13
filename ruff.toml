@@ -1,0 +1,5 @@
+target-version = "py312"
+exclude = [".venv", ".uv-cache"]
+
+[lint]
+select = ["E", "F", "I", "UP", "B"]
