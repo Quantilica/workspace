@@ -1,0 +1,19 @@
+# Sub-repositórios com repos próprios — não rastrear pelo repo raiz
+.github/
+docs/
+quantilica-core/
+quantilica-io/
+quantilica-cli/
+sidra-fetcher/
+sidra-sql/
+comex-fetcher/
+datasus-fetcher/
+inmet-fetcher/
+pdet-fetcher/
+rtn-fetcher/
+tesouro-direto-fetcher/
+sidra-pipelines/
+
+# Artefatos de ambiente
+.venv/
+uv.lock
