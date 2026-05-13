@@ -1,0 +1,20 @@
+[tool.uv.workspace]
+members = [
+    "quantilica-core",
+    "quantilica-io",
+    "quantilica-cli",
+    "sidra-fetcher",
+    "sidra-sql",
+    "comex-fetcher",
+    "datasus-fetcher",
+    "inmet-fetcher",
+    "pdet-fetcher",
+    "rtn-fetcher",
+    "tesouro-direto-fetcher",
+]
+
+[tool.uv.sources]
+quantilica-core = { workspace = true }
+quantilica-io = { workspace = true }
+quantilica-cli = { workspace = true }
+sidra-fetcher = { workspace = true }
