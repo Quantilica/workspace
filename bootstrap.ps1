@@ -16,6 +16,7 @@ $workspacePackages = @(
     "pdet-fetcher"
     "rtn-fetcher"
     "tesouro-direto-fetcher"
+    "bcb-sgs-fetcher"
     "sidra-pipelines"
 )
 
