@@ -11,6 +11,7 @@ members = [
     "pdet-fetcher",
     "rtn-fetcher",
     "tesouro-direto-fetcher",
+    "bcb-sgs-fetcher",
 ]
 
 [tool.uv.sources]
@@ -18,3 +19,4 @@ quantilica-core = { workspace = true }
 quantilica-io = { workspace = true }
 quantilica-cli = { workspace = true }
 sidra-fetcher = { workspace = true }
+bcb-sgs-fetcher = { workspace = true }
