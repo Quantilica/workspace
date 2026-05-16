@@ -27,6 +27,7 @@ Isso cria um único `.venv` compartilhado com todos os pacotes instalados como e
 | [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | 0.2.0 | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
 | [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | 0.1.0 | Processamento analítico: Polars, Parquet, schemas |
 | [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | 0.1.0 | CLI unificada com arquitetura de plugins via entry points |
+| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | 0.1.0 | Plugin de CLI para sincronizar manifestos de download com um catálogo na nuvem |
 
 ### Coletores de dados
 
@@ -47,6 +48,23 @@ Isso cria um único `.venv` compartilhado com todos os pacotes instalados como e
 | Pacote | Descrição |
 |---|---|
 | [`sidra-pipelines`](https://github.com/Quantilica/sidra-pipelines) | Catálogo declarativo de pipelines SIDRA (fetch.toml + transform.sql) |
+
+---
+
+## Aplicações
+
+Além dos pacotes (bibliotecas e ferramentas), o diretório do workspace também abriga as **aplicações web** da Quantilica. São uma camada distinta: repositórios **privados**, **não** são membros do uv workspace, têm o próprio `uv.lock` e ciclo de deploy, e rodam sobre **Flask + PostgreSQL + Docker**.
+
+| Aplicação | Descrição |
+|---|---|
+| [`quantilica-web`](https://github.com/Quantilica/quantilica-web) | Infraestrutura web compartilhada: factory `create_flask_app()`, configuração base, segurança, cache e autenticação |
+| [`bcb-sgs-metadata-db`](https://github.com/Quantilica/bcb-sgs-metadata-db) | App Flask + Celery + PostgreSQL + Redis — espelho de metadados e séries do BCB/SGS |
+| [`datasus-metadata-db`](https://github.com/Quantilica/datasus-metadata-db) | App Flask + PostgreSQL — rastreador de mudanças nos metadados do FTP do DATASUS |
+| [`ibge-sidra-metadata-db`](https://github.com/Quantilica/ibge-sidra-metadata-db) | App Flask + PostgreSQL — explorador de metadados do IBGE/SIDRA |
+| [`tddata-db`](https://github.com/Quantilica/tddata-db) | App Flask + PostgreSQL — explorador de dados do Tesouro Direto |
+| [`quantilica.github.io`](https://github.com/Quantilica/quantilica.github.io) | Site estático (Hugo) — GitHub Pages da organização |
+
+> Os pacotes são públicos (MIT) e seguem convenções compartilhadas estritas; as aplicações são privadas e cada uma define as próprias convenções. `uv sync --all-packages` instala apenas os pacotes, não as aplicações.
 
 ---
 

@@ -13,6 +13,7 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 | `quantilica-core` | Foundation layer: HTTP client (httpx), structured logging, atomic storage, SHA-256 download manifests, execution manifests for data provenance |
 | `quantilica-io` | Analytical data layer: Polars DataFrames, PyArrow, Parquet I/O, schema validation |
 | `quantilica-cli` | Unified CLI with plugin architecture — discovers fetchers via `quantilica.fetchers` entry points, no hard dependencies on fetcher packages |
+| `quantilica-cloud` | CLI plugin for syncing download manifests to a cloud catalog; registered under the `quantilica.commands` entry-point group |
 
 ### Data Fetchers
 
@@ -26,6 +27,7 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 | `pdet-fetcher` | MTE/PDET | Labor microdata (CAGED, RAIS) |
 | `rtn-fetcher` | Tesouro Nacional (STN) | Fiscal data (RTN) |
 | `tesouro-direto-fetcher` | Tesouro Direto (STN) | Government bonds data |
+| `bcb-sgs-fetcher` | BCB SGS API | Central Bank time-series |
 
 ### ETL
 
@@ -39,8 +41,10 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 quantilica-core  (no internal deps)
 ├── quantilica-io
 ├── quantilica-cli
+│   └── quantilica-cloud  (also depends on quantilica-core)
 ├── sidra-fetcher
 │   └── sidra-sql
+├── bcb-sgs-fetcher
 ├── comex-fetcher
 ├── datasus-fetcher
 ├── inmet-fetcher
@@ -48,6 +52,23 @@ quantilica-core  (no internal deps)
 ├── rtn-fetcher
 └── tesouro-direto-fetcher
 ```
+
+---
+
+## Application Layer
+
+The workspace directory also holds **deployed web applications** — a tier distinct from the packages above, with their own repos and conventions.
+
+| Application | Description |
+|---|---|
+| `quantilica-web` | Shared web infrastructure package: `create_flask_app()` factory, base config, security, cache, auth — consumed by every `-db` app |
+| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis — mirrors BCB SGS metadata and time-series; admin panel, LLM reports |
+| `datasus-metadata-db` | Flask + PostgreSQL — tracks changes to DATASUS FTP file metadata over time |
+| `ibge-sidra-metadata-db` | Flask + PostgreSQL — explorer for IBGE/SIDRA survey metadata |
+| `tddata-db` | Flask + PostgreSQL — Tesouro Direto bond data explorer, portfolio returns |
+| `quantilica.github.io` | Hugo static site — the organization's GitHub Pages |
+
+**Packages vs. Applications:** packages are reusable libraries/tools — uv workspace members, public (MIT), pure Python, strict shared conventions (ruff `line-length 79`, Python 3.12). Applications are deployed web services — **private repos**, **not uv workspace members** (own `uv.lock`, own deps, own Python pin), built on **Flask + PostgreSQL + Redis + Docker**, with per-app conventions (e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`). Applications sit downstream of the packages and are not installed by `uv sync --all-packages`. Inside an application, follow that repo's own `CLAUDE.md`/`ruff` config.
 
 ---
 

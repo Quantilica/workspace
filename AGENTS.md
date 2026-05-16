@@ -10,8 +10,10 @@ This is the **development workspace** for the Quantilica ecosystem: a set of Pyt
 quantilica-core  (no internal deps)
 ├── quantilica-io
 ├── quantilica-cli
+│   └── quantilica-cloud  (also depends on quantilica-core)
 ├── sidra-fetcher
 │   └── sidra-sql
+├── bcb-sgs-fetcher
 ├── comex-fetcher
 ├── datasus-fetcher
 ├── inmet-fetcher
@@ -21,6 +23,25 @@ quantilica-core  (no internal deps)
 ```
 
 Additional package: `sidra-pipelines` — declarative ETL pipelines (TOML + SQL), no Python package deps on the above.
+
+`quantilica-cloud` is a `quantilica-cli` plugin (`quantilica.commands` entry-point group) that syncs download manifests to a cloud catalog.
+
+---
+
+## Application layer
+
+The workspace directory also contains **deployed web applications** — a separate tier from the packages above:
+
+| Application | Description |
+|---|---|
+| `quantilica-web` | Shared Flask/FastAPI infrastructure: `create_flask_app()` factory, config, security, cache, auth |
+| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis — BCB SGS metadata/series mirror |
+| `datasus-metadata-db` | Flask + PostgreSQL — DATASUS FTP metadata change tracker |
+| `ibge-sidra-metadata-db` | Flask + PostgreSQL — IBGE/SIDRA metadata explorer |
+| `tddata-db` | Flask + PostgreSQL — Tesouro Direto data explorer |
+| `quantilica.github.io` | Hugo static site (organization GitHub Pages) |
+
+Applications differ from packages: they are **private repos**, **not uv workspace members** (own `uv.lock`, own deps, own Python pin), built on **Flask + PostgreSQL + Docker**, and may use different conventions (e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`). They are not installed by `uv sync --all-packages`. When working inside an application, follow that repo's own `CLAUDE.md`/`ruff` config — not the workspace package conventions.
 
 ---
 
