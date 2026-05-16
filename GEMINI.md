@@ -57,18 +57,29 @@ quantilica-core  (no internal deps)
 
 ## Application Layer
 
-The workspace directory also holds **deployed web applications** — a tier distinct from the packages above, with their own repos and conventions.
+Beyond the library/tool packages above, the workspace directory also holds **deployed web applications**. These are a distinct tier — different repos, different conventions — and must be treated separately.
 
 | Application | Description |
 |---|---|
-| `quantilica-web` | Shared web infrastructure package: `create_flask_app()` factory, base config, security, cache, auth — consumed by every `-db` app |
-| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis — mirrors BCB SGS metadata and time-series; admin panel, LLM reports |
-| `datasus-metadata-db` | Flask + PostgreSQL — tracks changes to DATASUS FTP file metadata over time |
-| `ibge-sidra-metadata-db` | Flask + PostgreSQL — explorer for IBGE/SIDRA survey metadata |
-| `tddata-db` | Flask + PostgreSQL — Tesouro Direto bond data explorer, portfolio returns |
+| `quantilica-web` | Shared web infrastructure package: `create_flask_app()` factory, base config, security, cache, auth, error handlers — consumed by every `-db` app (also has a FastAPI extra) |
+| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis app — mirrors BCB SGS metadata and time-series; admin panel, LLM reports, Telegram alerts, S3 image storage |
+| `datasus-metadata-db` | Flask + PostgreSQL app — tracks changes to DATASUS FTP file metadata over time |
+| `ibge-sidra-metadata-db` | Flask + PostgreSQL app — explorer for IBGE/SIDRA survey metadata |
+| `tddata-db` | Flask + PostgreSQL app — Tesouro Direto bond data explorer with portfolio-returns calculations |
+| `quantilica-manifests-db` | FastAPI + PostgreSQL + Redis app — multi-tenant SaaS catalog for download manifests; observability and data provenance |
 | `quantilica.github.io` | Hugo static site — the organization's GitHub Pages |
 
-**Packages vs. Applications:** packages are reusable libraries/tools — uv workspace members, public (MIT), pure Python, strict shared conventions (ruff `line-length 79`, Python 3.12). Applications are deployed web services — **private repos**, **not uv workspace members** (own `uv.lock`, own deps, own Python pin), built on **Flask + PostgreSQL + Redis + Docker**, with per-app conventions (e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`). Applications sit downstream of the packages and are not installed by `uv sync --all-packages`. Inside an application, follow that repo's own `CLAUDE.md`/`ruff` config.
+### Packages vs. Applications — the two tiers
+
+| | Packages (core, io, cli, cloud, fetchers, pipelines, `quantilica-web`) | Applications (`-db` apps) |
+|---|---|---|
+| Role | Reusable libraries / CLI tools | Deployed web services |
+| uv workspace member | Yes — shared `.venv`, synced by `uv sync --all-packages` | No — own `uv.lock`, own dependency set |
+| Visibility | Public (MIT) | Private |
+| Stack | Pure Python, `hatchling` | Flask/FastAPI + PostgreSQL + Redis + Docker |
+| Conventions | Strict shared: ruff `line-length 79`, Python 3.12 (`quantilica-web` uses `line-length 88`) | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
+
+The applications sit **downstream** of the packages: they load data/metadata into PostgreSQL and expose web UIs and JSON APIs. When working inside an application directory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not assume the workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 
 ---
 
@@ -87,7 +98,9 @@ uv run python -c "from quantilica_core import HttpClient"
 uv run --package sidra-fetcher pytest sidra-fetcher/tests/
 ```
 
-Do not modify `uv.lock` manually. Always use `uv add` to add new dependencies.
+To add a new package to the workspace, add its directory name to the `members` list in the root `pyproject.toml` and re-run `uv sync --all-packages`.
+
+Each package directory is an independent git repository with its own history and release cycle.
 
 ---
 
@@ -99,6 +112,7 @@ Do not modify `uv.lock` manually. Always use `uv add` to add new dependencies.
 - **Linting/formatting:** `ruff` — `line-length = 79`, rules: `E, F, I, UP, B`
 - **Testing:** `pytest` (>= 8.0)
 - **Imports:** alphabetical order within each group (stdlib → third-party → local), at the top of the file
+- **Dependencies:** declare in `pyproject.toml` with minimum version pins; use `uv add` to add new ones
 
 ---
 

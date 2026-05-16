@@ -1,10 +1,41 @@
 # Quantilica Ecosystem — Agent Instructions
 
-This is the **development workspace** for the Quantilica ecosystem: a set of Python packages for collecting, normalizing, and analyzing Brazilian public data (economic, health, meteorological, fiscal, labor). This root directory is a uv workspace, not a publishable package.
+This is the **development workspace** for the Quantilica ecosystem: a collection of Python packages for collecting, normalizing, and analyzing Brazilian public data. This root directory is not a publishable package — it is a uv workspace that coordinates local development across all packages.
 
 ---
 
-## Packages and dependencies
+## Package Ecosystem
+
+### Infrastructure
+
+| Package | Description |
+|---|---|
+| `quantilica-core` | Foundation layer: HTTP client (httpx), structured logging, atomic storage, SHA-256 download manifests, execution manifests for data provenance |
+| `quantilica-io` | Analytical data layer: Polars DataFrames, PyArrow, Parquet I/O, schema validation |
+| `quantilica-cli` | Unified CLI with plugin architecture — discovers fetchers via `quantilica.fetchers` entry points, no hard dependencies on fetcher packages |
+| `quantilica-cloud` | CLI plugin for syncing download manifests to a cloud catalog; registered under the `quantilica.commands` entry-point group |
+
+### Data Fetchers
+
+| Package | Data Source | Domain |
+|---|---|---|
+| `sidra-fetcher` | IBGE SIDRA & Agregados API | Economic statistics, price indices, demographics |
+| `sidra-sql` | (depends on sidra-fetcher) | Loads SIDRA data into PostgreSQL |
+| `comex-fetcher` | MDIC/Comex Stat | Foreign trade (imports/exports) |
+| `datasus-fetcher` | DATASUS FTP | Health microdata |
+| `inmet-fetcher` | INMET BDMEP | Meteorological station data |
+| `pdet-fetcher` | MTE/PDET | Labor microdata (CAGED, RAIS) |
+| `rtn-fetcher` | Tesouro Nacional (STN) | Fiscal data (RTN) |
+| `tesouro-direto-fetcher` | Tesouro Direto (STN) | Government bonds data |
+| `bcb-sgs-fetcher` | BCB SGS API | Central Bank time-series |
+
+### ETL
+
+| Package | Description |
+|---|---|
+| `sidra-pipelines` | Declarative ETL catalog: `fetch.toml` + `transform.sql` files per pipeline, wide/pivot output pattern |
+
+### Dependency graph
 
 ```
 quantilica-core  (no internal deps)
@@ -22,59 +53,84 @@ quantilica-core  (no internal deps)
 └── tesouro-direto-fetcher
 ```
 
-Additional package: `sidra-pipelines` — declarative ETL pipelines (TOML + SQL), no Python package deps on the above.
-
-`quantilica-cloud` is a `quantilica-cli` plugin (`quantilica.commands` entry-point group) that syncs download manifests to a cloud catalog.
-
 ---
 
-## Application layer
+## Application Layer
 
-The workspace directory also contains **deployed web applications** — a separate tier from the packages above:
+Beyond the library/tool packages above, the workspace directory also holds **deployed web applications**. These are a distinct tier — different repos, different conventions — and must be treated separately.
 
 | Application | Description |
 |---|---|
-| `quantilica-web` | Shared Flask/FastAPI infrastructure: `create_flask_app()` factory, config, security, cache, auth |
-| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis — BCB SGS metadata/series mirror |
-| `datasus-metadata-db` | Flask + PostgreSQL — DATASUS FTP metadata change tracker |
-| `ibge-sidra-metadata-db` | Flask + PostgreSQL — IBGE/SIDRA metadata explorer |
-| `tddata-db` | Flask + PostgreSQL — Tesouro Direto data explorer |
-| `quantilica.github.io` | Hugo static site (organization GitHub Pages) |
+| `quantilica-web` | Shared web infrastructure package: `create_flask_app()` factory, base config, security, cache, auth, error handlers — consumed by every `-db` app (also has a FastAPI extra) |
+| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis app — mirrors BCB SGS metadata and time-series; admin panel, LLM reports, Telegram alerts, S3 image storage |
+| `datasus-metadata-db` | Flask + PostgreSQL app — tracks changes to DATASUS FTP file metadata over time |
+| `ibge-sidra-metadata-db` | Flask + PostgreSQL app — explorer for IBGE/SIDRA survey metadata |
+| `tddata-db` | Flask + PostgreSQL app — Tesouro Direto bond data explorer with portfolio-returns calculations |
+| `quantilica-manifests-db` | FastAPI + PostgreSQL + Redis app — multi-tenant SaaS catalog for download manifests; observability and data provenance |
+| `quantilica.github.io` | Hugo static site — the organization's GitHub Pages |
 
-Applications differ from packages: they are **private repos**, **not uv workspace members** (own `uv.lock`, own deps, own Python pin), built on **Flask + PostgreSQL + Docker**, and may use different conventions (e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`). They are not installed by `uv sync --all-packages`. When working inside an application, follow that repo's own `CLAUDE.md`/`ruff` config — not the workspace package conventions.
+### Packages vs. Applications — the two tiers
+
+| | Packages (core, io, cli, cloud, fetchers, pipelines, `quantilica-web`) | Applications (`-db` apps) |
+|---|---|---|
+| Role | Reusable libraries / CLI tools | Deployed web services |
+| uv workspace member | Yes — shared `.venv`, synced by `uv sync --all-packages` | No — own `uv.lock`, own dependency set |
+| Visibility | Public (MIT) | Private |
+| Stack | Pure Python, `hatchling` | Flask/FastAPI + PostgreSQL + Redis + Docker |
+| Conventions | Strict shared: ruff `line-length 79`, Python 3.12 (`quantilica-web` uses `line-length 88`) | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
+
+The applications sit **downstream** of the packages: they load data/metadata into PostgreSQL and expose web UIs and JSON APIs. When working inside an application directory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not assume the workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 
 ---
 
-## Workspace setup
+## uv Workspace
+
+This workspace uses a single shared `.venv`. All packages are installed as editable installs, so changes to any package are immediately reflected in all others.
 
 ```bash
-uv sync --all-packages   # creates shared .venv with all packages as editable installs
-uv run <command>         # run any command in the workspace environment
+# Sync all packages (run from workspace root)
+uv sync --all-packages
+
+# Run a script in the workspace environment
+uv run python -c "from quantilica_core import HttpClient"
+
+# Run tests for a specific package
+uv run --package sidra-fetcher pytest sidra-fetcher/tests/
 ```
 
-Do not modify `uv.lock` manually. Do not use `pip` directly — always use `uv`.
+To add a new package to the workspace, add its directory name to the `members` list in the root `pyproject.toml` and re-run `uv sync --all-packages`.
+
+Each package directory is an independent git repository with its own history and release cycle.
 
 ---
 
-## Development rules
+## Development Conventions
 
-- Python >= 3.12, build backend: `hatchling`
-- Linting and formatting: `ruff` (`line-length = 79`, rules `E, F, I, UP, B`)
-- Tests: `pytest` >= 8.0
-- Imports: alphabetical order (stdlib → third-party → local), all at the top of the file
-- Declare dependencies in `pyproject.toml`; use `uv add` to add new ones
-
----
-
-## Key architecture decisions
-
-- **Plugin system:** fetchers register as `quantilica.fetchers` entry points; `quantilica-cli` discovers them dynamically — never add fetchers as direct deps of `quantilica-cli`
-- **Manifests:** all fetchers produce `DownloadManifest` and `ExecutionManifest` (SHA-256, source URL, timestamps) via `quantilica-core`
-- **Atomic writes:** always use `quantilica-core` storage utilities for file output
-- **SIDRA transforms:** wide/pivot format — variables become columns, not rows
+- **Python:** >= 3.12
+- **Build backend:** `hatchling`
+- **Package manager:** `uv` (never use `pip` directly)
+- **Linting/formatting:** `ruff` — `line-length = 79`, rules: `E, F, I, UP, B`
+- **Testing:** `pytest` (>= 8.0)
+- **Imports:** alphabetical order within each group (stdlib → third-party → local), at the top of the file
+- **Dependencies:** declare in `pyproject.toml` with minimum version pins; use `uv add` to add new ones
 
 ---
 
-## Repository structure
+## Architecture Patterns
 
-Each subdirectory (`quantilica-core/`, `sidra-fetcher/`, etc.) is an independent git repository with its own release cycle. The root repo tracks only workspace-level files (`pyproject.toml`, `uv.lock`, this file).
+### Plugin system (fetchers)
+Each fetcher registers a Typer sub-app via entry points:
+```toml
+[project.entry-points."quantilica.fetchers"]
+comex = "comex_fetcher.plugin:app"
+```
+`quantilica-cli` discovers and mounts all installed fetchers automatically. Never add fetcher packages as direct dependencies of `quantilica-cli`.
+
+### Manifest system
+`quantilica-core` provides `DownloadManifest` and `ExecutionManifest` for data provenance tracking (SHA-256 checksums, source URLs, timestamps). All fetchers must produce manifests alongside downloaded data.
+
+### Storage layer
+Use `quantilica-core`'s storage utilities for atomic file writes. Downloaded files must be written atomically to avoid partial/corrupt state.
+
+### SIDRA transform pattern
+`sidra-pipelines` uses a wide/pivot output: SIDRA variables become columns, not rows. Transforms are defined in `transform.toml` + `.sql` files.
