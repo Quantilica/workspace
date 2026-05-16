@@ -3,6 +3,7 @@
 docs/
 quantilica-core/
 quantilica-io/
+quantilica-manifests-db/
 quantilica-cli/
 sidra-fetcher/
 sidra-sql/
@@ -13,7 +14,19 @@ pdet-fetcher/
 rtn-fetcher/
 tesouro-direto-fetcher/
 sidra-pipelines/
+bcb-sgs-fetcher/
+bcb-sgs-metadata-db/
+datasus-metadata-db/
+ibge-sidra-metadata-db/
+tddata-db/
+ibge-sidra-metadata-db/
+quantilica-cloud/
+quantilica-web/
+quantilica.github.io/
 
 # Artefatos de ambiente
 .venv/
 uv.lock
+
+# Claude settings
+.claude/
