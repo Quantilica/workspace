@@ -3,6 +3,9 @@ members = [
     "quantilica-core",
     "quantilica-io",
     "quantilica-cli",
+    "quantilica-catalog",
+    "quantilica-web",
+    "quantilica-cloud",
     "sidra-fetcher",
     "sidra-sql",
     "comex-fetcher",
@@ -12,13 +15,13 @@ members = [
     "rtn-fetcher",
     "tesouro-direto-fetcher",
     "bcb-sgs-fetcher",
-    "quantilica-cloud",
 ]
 
 [tool.uv.sources]
 quantilica-core = { workspace = true }
 quantilica-io = { workspace = true }
 quantilica-cli = { workspace = true }
+quantilica-catalog = { workspace = true }
+quantilica-web = { workspace = true }
 quantilica-cloud = { workspace = true }
 sidra-fetcher = { workspace = true }
-bcb-sgs-fetcher = { workspace = true }

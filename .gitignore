@@ -23,6 +23,7 @@ ibge-sidra-metadata-db/
 quantilica-cloud/
 quantilica-web/
 quantilica.github.io/
+quantilica-catalog/
 
 # Artefatos de ambiente
 .venv/
@@ -30,3 +31,6 @@ uv.lock
 
 # Claude settings
 .claude/
+
+# Repo de planos (git aninhado)
+planning/

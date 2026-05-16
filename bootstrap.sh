@@ -10,6 +10,9 @@ WORKSPACE_PACKAGES=(
     quantilica-core
     quantilica-io
     quantilica-cli
+    quantilica-catalog
+    quantilica-web
+    quantilica-cloud
     sidra-fetcher
     sidra-sql
     comex-fetcher
