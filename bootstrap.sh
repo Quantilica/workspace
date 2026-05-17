@@ -11,7 +11,6 @@ WORKSPACE_PACKAGES=(
     quantilica-io
     quantilica-cli
     quantilica-catalog
-    quantilica-web
     quantilica-cloud
     sidra-fetcher
     sidra-sql

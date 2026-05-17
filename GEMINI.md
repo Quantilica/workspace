@@ -61,7 +61,6 @@ Beyond the library/tool packages above, the workspace directory also holds **dep
 
 | Application | Description |
 |---|---|
-| `quantilica-web` | Shared web infrastructure package: `create_flask_app()` factory, base config, security, cache, auth, error handlers — consumed by every `-db` app (also has a FastAPI extra) |
 | `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis app — mirrors BCB SGS metadata and time-series; admin panel, LLM reports, Telegram alerts, S3 image storage |
 | `datasus-metadata-db` | Flask + PostgreSQL app — tracks changes to DATASUS FTP file metadata over time |
 | `ibge-sidra-metadata-db` | Flask + PostgreSQL app — explorer for IBGE/SIDRA survey metadata |
@@ -71,13 +70,13 @@ Beyond the library/tool packages above, the workspace directory also holds **dep
 
 ### Packages vs. Applications — the two tiers
 
-| | Packages (core, io, cli, cloud, fetchers, pipelines, `quantilica-web`) | Applications (`-db` apps) |
+| | Packages (core, io, cli, cloud, fetchers, pipelines) | Applications (`-db` apps) |
 |---|---|---|
 | Role | Reusable libraries / CLI tools | Deployed web services |
 | uv workspace member | Yes — shared `.venv`, synced by `uv sync --all-packages` | No — own `uv.lock`, own dependency set |
 | Visibility | Public (MIT) | Private |
 | Stack | Pure Python, `hatchling` | Flask/FastAPI + PostgreSQL + Redis + Docker |
-| Conventions | Strict shared: ruff `line-length 79`, Python 3.12 (`quantilica-web` uses `line-length 88`) | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
+| Conventions | Strict shared: ruff `line-length 79`, Python 3.12 | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
 
 The applications sit **downstream** of the packages: they load data/metadata into PostgreSQL and expose web UIs and JSON APIs. When working inside an application directory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not assume the workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 

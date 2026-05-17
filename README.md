@@ -57,7 +57,6 @@ Além dos pacotes (bibliotecas e ferramentas), o diretório do workspace também
 
 | Aplicação | Descrição |
 |---|---|
-| [`quantilica-web`](https://github.com/Quantilica/quantilica-web) | Infraestrutura web compartilhada: factory `create_flask_app()`, configuração base, segurança, cache e autenticação |
 | [`bcb-sgs-metadata-db`](https://github.com/Quantilica/bcb-sgs-metadata-db) | App Flask + Celery + PostgreSQL + Redis — espelho de metadados e séries do BCB/SGS |
 | [`datasus-metadata-db`](https://github.com/Quantilica/datasus-metadata-db) | App Flask + PostgreSQL — rastreador de mudanças nos metadados do FTP do DATASUS |
 | [`ibge-sidra-metadata-db`](https://github.com/Quantilica/ibge-sidra-metadata-db) | App Flask + PostgreSQL — explorador de metadados do IBGE/SIDRA |
