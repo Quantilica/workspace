@@ -26,7 +26,8 @@ WORKSPACE_PACKAGES=(
 
 OTHER_REPOS=(
     ".github:.github"
-    "quantilica.github.io:docs"
+    "docs:docs"
+    "quantilica.github.io:quantilica.github.io"
 )
 
 clone_or_pull() {
