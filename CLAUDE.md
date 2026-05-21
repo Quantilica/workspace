@@ -139,3 +139,69 @@ Use `quantilica-core`'s storage utilities for atomic file writes. Downloaded fil
 ## Per-package CLAUDE.md
 
 Individual packages may have their own `CLAUDE.md` with package-specific context. Those take precedence over this file for package-specific work.
+
+---
+
+## `.gitignore` convention for applications
+
+The public docs site (`docs/normas/gitignore.md`) covers only the **library/fetcher** template. Applications (`-db` apps, `sidra-pipelines`, `docs`) are private and follow an extended template that **versions `uv.lock`** (deploy reproducibility) and adds web-runtime patterns.
+
+Template for application repos:
+
+```gitignore
+# Build / packaging
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+
+# Virtual envs e caches do uv
+.venv/
+.uv-cache/
+# uv.lock é versionado em apps (deploy reproduzível)
+
+# Caches de teste / lint / tipos
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Cobertura
+.coverage
+.coverage.*
+htmlcov/
+
+# Runtime web
+instance/
+db.sqlite3
+db.sqlite3-journal
+/static
+/media
+
+# Build de docs (mkdocs / sphinx)
+site/
+docs/_build/
+
+# Editor / IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+
+# Logs e env locais
+*.log
+.env
+.env.local
+
+# Claude
+.claude/
+```
+
+Key differences from the library template:
+
+- `uv.lock` is **not** ignored — applications commit it for reproducible deploys.
+- Adds web-runtime block: `instance/`, `db.sqlite3*`, `/static`, `/media`.
+- Adds docs-build block: `site/`, `docs/_build/`.
+
+Drop `/static`, `/media`, or the runtime block in apps that don't serve assets (JSON-only APIs, ETL catalogs, doc sites). Repo-specific entries (`data/`, `*.ini`, `.pgpass`, etc.) go below the template under a `# Específico do repo` header.

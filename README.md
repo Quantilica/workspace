@@ -65,6 +65,8 @@ Além dos pacotes (bibliotecas e ferramentas), o diretório do workspace também
 
 > Os pacotes são públicos (MIT) e seguem convenções compartilhadas estritas; as aplicações são privadas e cada uma define as próprias convenções. `uv sync --all-packages` instala apenas os pacotes, não as aplicações.
 
+A diferença prática mais visível: pacotes-biblioteca **não** versionam `uv.lock` (template documentado em [`docs/normas/gitignore.md`](https://docs.quantilica.com/normas/gitignore/)); aplicações **versionam** `uv.lock` para deploy reproduzível (template em `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`).
+
 ---
 
 ## Estrutura do workspace
