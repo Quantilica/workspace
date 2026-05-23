@@ -15,6 +15,7 @@ rtn-fetcher/
 tesouro-direto-fetcher/
 sidra-pipelines/
 bcb-sgs-fetcher/
+bcb-sgs-sql/
 bcb-sgs-metadata-db/
 datasus-metadata-db/
 ibge-sidra-metadata-db/
@@ -27,6 +28,7 @@ quantilica-catalog/
 # Artefatos de ambiente
 .venv/
 uv.lock
+*.log
 
 # Claude settings
 .claude/

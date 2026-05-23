@@ -14,6 +14,7 @@ members = [
     "rtn-fetcher",
     "tesouro-direto-fetcher",
     "bcb-sgs-fetcher",
+    "bcb-sgs-sql",
 ]
 
 [tool.uv.sources]
@@ -23,3 +24,4 @@ quantilica-cli = { workspace = true }
 quantilica-catalog = { workspace = true }
 quantilica-cloud = { workspace = true }
 sidra-fetcher = { workspace = true }
+bcb-sgs-fetcher = { workspace = true }
