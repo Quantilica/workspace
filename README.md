@@ -41,7 +41,7 @@ Isso cria um único `.venv` compartilhado com todos os pacotes instalados como e
 | [`pdet-fetcher`](https://github.com/Quantilica/pdet-fetcher) | 0.1.1 | MTE/PDET | Microdados de trabalho (CAGED, RAIS) |
 | [`rtn-fetcher`](https://github.com/Quantilica/rtn-fetcher) | 0.1.0 | STN | Dados fiscais (RTN) |
 | [`tesouro-direto-fetcher`](https://github.com/Quantilica/tesouro-direto-fetcher) | 2.1.1 | STN | Dados do Tesouro Direto |
-| [`bcb-sgs-fetcher`](https://github.com/Quantilica/bcb-sgs-fetcher) | 0.1.0 | BCB/SGS | Séries temporais do Banco Central |
+| [`bcb-sgs-fetcher`](https://github.com/Quantilica/bcb-sgs-fetcher) | 0.4.0 | BCB/SGS | Séries temporais do Banco Central |
 | [`bcb-sgs-sql`](https://github.com/Quantilica/bcb-sgs-sql) | 0.1.0 | BCB/SGS | Carregamento de séries do BCB SGS em PostgreSQL |
 
 ### Pipelines ETL

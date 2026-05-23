@@ -28,6 +28,7 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 | `rtn-fetcher` | Tesouro Nacional (STN) | Fiscal data (RTN) |
 | `tesouro-direto-fetcher` | Tesouro Direto (STN) | Government bonds data |
 | `bcb-sgs-fetcher` | BCB SGS API | Central Bank time-series |
+| `bcb-sgs-sql` | (depends on bcb-sgs-fetcher) | Loads BCB SGS data into PostgreSQL |
 
 ### ETL
 
@@ -45,6 +46,7 @@ quantilica-core  (no internal deps)
 ├── sidra-fetcher
 │   └── sidra-sql
 ├── bcb-sgs-fetcher
+│   └── bcb-sgs-sql
 ├── comex-fetcher
 ├── datasus-fetcher
 ├── inmet-fetcher
