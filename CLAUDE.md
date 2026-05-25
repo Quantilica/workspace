@@ -78,7 +78,7 @@ Beyond the library/tool packages above, the workspace directory also holds **dep
 | uv workspace member | Yes — shared `.venv`, synced by `uv sync --all-packages` | No — own `uv.lock`, own dependency set |
 | Visibility | Public (MIT) | Private |
 | Stack | Pure Python, `hatchling` | Flask/FastAPI + PostgreSQL + Redis + Docker |
-| Conventions | Strict shared: ruff `line-length 79`, Python 3.12 | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
+| Conventions | Strict shared: ruff `line-length 88`, Python 3.12 | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
 
 The applications sit **downstream** of the packages: they load data/metadata into PostgreSQL and expose web UIs and JSON APIs. When working inside an application directory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not assume the workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 
@@ -110,7 +110,7 @@ Each package directory is an independent git repository with its own history and
 - **Python:** >= 3.12
 - **Build backend:** `hatchling`
 - **Package manager:** `uv` (never use `pip` directly)
-- **Linting/formatting:** `ruff` — `line-length = 79`, rules: `E, F, I, UP, B`
+- **Linting/formatting:** `ruff` — `line-length = 88`, rules: `E, F, I, UP, B`
 - **Testing:** `pytest` (>= 8.0)
 - **Imports:** alphabetical order within each group (stdlib → third-party → local), at the top of the file
 - **Dependencies:** declare in `pyproject.toml` with minimum version pins; use `uv add` to add new ones
