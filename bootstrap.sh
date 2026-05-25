@@ -21,7 +21,9 @@ WORKSPACE_PACKAGES=(
     rtn-fetcher
     tesouro-direto-fetcher
     bcb-sgs-fetcher
+    bcb-sgs-sql
     sidra-pipelines
+    bcb-sgs-pipelines
 )
 
 OTHER_REPOS=(

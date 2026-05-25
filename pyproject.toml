@@ -24,4 +24,6 @@ quantilica-cli = { workspace = true }
 quantilica-catalog = { workspace = true }
 quantilica-cloud = { workspace = true }
 sidra-fetcher = { workspace = true }
+sidra-sql = { workspace = true }
 bcb-sgs-fetcher = { workspace = true }
+bcb-sgs-sql = { workspace = true }

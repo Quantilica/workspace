@@ -14,6 +14,7 @@ pdet-fetcher/
 rtn-fetcher/
 tesouro-direto-fetcher/
 sidra-pipelines/
+bcb-sgs-pipelines/
 bcb-sgs-fetcher/
 bcb-sgs-sql/
 bcb-sgs-metadata-db/
