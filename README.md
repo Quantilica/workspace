@@ -8,13 +8,14 @@ Este repositório é o **workspace de desenvolvimento** do ecossistema Quantilic
 
 **Pré-requisitos:** Python >= 3.12, [`uv`](https://docs.astral.sh/uv/getting-started/installation/)
 
-Clone cada sub-repositório dentro deste diretório e então sincronize o workspace:
+Clone todos os sub-repositórios e sincronize o workspace de uma vez:
 
 ```bash
-uv sync --all-packages
+./bootstrap.sh    # Linux/macOS
+./bootstrap.ps1   # Windows (PowerShell)
 ```
 
-Isso cria um único `.venv` compartilhado com todos os pacotes instalados como editable installs. Mudanças em qualquer pacote são imediatamente visíveis nos demais.
+Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv` compartilhado com todos os pacotes instalados como editable installs. Mudanças em qualquer pacote são imediatamente visíveis nos demais.
 
 ---
 
@@ -24,25 +25,26 @@ Isso cria um único `.venv` compartilhado com todos os pacotes instalados como e
 
 | Pacote | Versão | Descrição |
 |---|---|---|
-| [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | 0.2.0 | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
-| [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | 0.1.0 | Processamento analítico: Polars, Parquet, schemas |
+| [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | 0.3.0 | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
+| [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | 0.2.0 | Processamento analítico: Polars, Parquet, schemas |
 | [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | 0.1.0 | CLI unificada com arquitetura de plugins via entry points |
-| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | 0.1.0 | Plugin de CLI para sincronizar manifestos de download com um catálogo na nuvem |
+| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | 0.1.0 | Plugin de CLI para sincronizar manifestos com um catálogo na nuvem |
+| [`quantilica-catalog`](https://github.com/Quantilica/quantilica-catalog) | 0.1.0 | Catálogo de dados e modelo canônico de observações |
 
 ### Coletores de dados
 
 | Pacote | Versão | Fonte | Descrição |
 |---|---|---|---|
-| [`sidra-fetcher`](https://github.com/Quantilica/sidra-fetcher) | 0.6.1 | IBGE/SIDRA | Cliente da API de Agregados e SIDRA |
-| [`sidra-sql`](https://github.com/Quantilica/sidra-sql) | 1.1.0 | IBGE/SIDRA | Carregamento de tabelas SIDRA em PostgreSQL |
-| [`comex-fetcher`](https://github.com/Quantilica/comex-fetcher) | 1.5.2 | MDIC | Dados de comércio exterior (importação/exportação) |
-| [`datasus-fetcher`](https://github.com/Quantilica/datasus-fetcher) | 0.4.1 | DATASUS | Microdados de saúde (FTP) |
-| [`inmet-fetcher`](https://github.com/Quantilica/inmet-fetcher) | 0.2.0 | INMET | Dados meteorológicos (BDMEP) |
-| [`pdet-fetcher`](https://github.com/Quantilica/pdet-fetcher) | 0.1.1 | MTE/PDET | Microdados de trabalho (CAGED, RAIS) |
-| [`rtn-fetcher`](https://github.com/Quantilica/rtn-fetcher) | 0.1.0 | STN | Dados fiscais (RTN) |
-| [`tesouro-direto-fetcher`](https://github.com/Quantilica/tesouro-direto-fetcher) | 2.1.1 | STN | Dados do Tesouro Direto |
+| [`sidra-fetcher`](https://github.com/Quantilica/sidra-fetcher) | 0.7.0 | IBGE/SIDRA | Cliente da API de Agregados e SIDRA |
+| [`sidra-sql`](https://github.com/Quantilica/sidra-sql) | 1.3.0 | IBGE/SIDRA | Carregamento de tabelas SIDRA em PostgreSQL |
+| [`comex-fetcher`](https://github.com/Quantilica/comex-fetcher) | 2.0.0 | MDIC | Dados de comércio exterior (importação/exportação) |
+| [`datasus-fetcher`](https://github.com/Quantilica/datasus-fetcher) | 0.6.0 | DATASUS | Microdados de saúde (FTP) |
+| [`inmet-fetcher`](https://github.com/Quantilica/inmet-fetcher) | 0.2.1 | INMET | Dados meteorológicos (BDMEP) |
+| [`pdet-fetcher`](https://github.com/Quantilica/pdet-fetcher) | 0.2.0 | MTE/PDET | Microdados de trabalho (CAGED, RAIS) |
+| [`rtn-fetcher`](https://github.com/Quantilica/rtn-fetcher) | 0.2.0 | STN | Dados fiscais (RTN) |
+| [`tesouro-direto-fetcher`](https://github.com/Quantilica/tesouro-direto-fetcher) | 3.0.0 | STN | Dados do Tesouro Direto |
 | [`bcb-sgs-fetcher`](https://github.com/Quantilica/bcb-sgs-fetcher) | 0.4.0 | BCB/SGS | Séries temporais do Banco Central |
-| [`bcb-sgs-sql`](https://github.com/Quantilica/bcb-sgs-sql) | 0.1.0 | BCB/SGS | Carregamento de séries do BCB SGS em PostgreSQL |
+| [`bcb-sgs-sql`](https://github.com/Quantilica/bcb-sgs-sql) | 0.1.1 | BCB/SGS | Carregamento de séries do BCB SGS em PostgreSQL |
 
 ### Pipelines ETL
 
@@ -52,21 +54,25 @@ Isso cria um único `.venv` compartilhado com todos os pacotes instalados como e
 
 ---
 
-## Aplicações
+## Comandos de desenvolvimento
 
-Além dos pacotes (bibliotecas e ferramentas), o diretório do workspace também abriga as **aplicações web** da Quantilica. São uma camada distinta: repositórios **privados**, **não** são membros do uv workspace, têm o próprio `uv.lock` e ciclo de deploy, e rodam sobre **Flask + PostgreSQL + Docker**.
+O workspace usa [`just`](https://github.com/casey/just) para tarefas comuns:
 
-| Aplicação | Descrição |
-|---|---|
-| [`bcb-sgs-metadata-db`](https://github.com/Quantilica/bcb-sgs-metadata-db) | App Flask + Celery + PostgreSQL + Redis — espelho de metadados e séries do BCB/SGS |
-| [`datasus-metadata-db`](https://github.com/Quantilica/datasus-metadata-db) | App Flask + PostgreSQL — rastreador de mudanças nos metadados do FTP do DATASUS |
-| [`ibge-sidra-metadata-db`](https://github.com/Quantilica/ibge-sidra-metadata-db) | App Flask + PostgreSQL — explorador de metadados do IBGE/SIDRA |
-| [`tddata-db`](https://github.com/Quantilica/tddata-db) | App Flask + PostgreSQL — explorador de dados do Tesouro Direto |
-| [`quantilica.github.io`](https://github.com/Quantilica/quantilica.github.io) | Site estático (Hugo) — GitHub Pages da organização |
+```bash
+just sync           # sincroniza todos os pacotes (uv sync --all-packages)
+just test <pacote>  # pytest para um pacote específico
+just lint           # ruff check no workspace inteiro
+just fmt            # ruff format no workspace inteiro
+just check          # lint + fmt-check juntos
+```
 
-> Os pacotes são públicos (MIT) e seguem convenções compartilhadas estritas; as aplicações são privadas e cada uma define as próprias convenções. `uv sync --all-packages` instala apenas os pacotes, não as aplicações.
+Sem `just`, use os equivalentes diretamente:
 
-A diferença prática mais visível: pacotes-biblioteca **não** versionam `uv.lock` (template documentado em [`docs/normas/gitignore.md`](https://docs.quantilica.com/normas/gitignore/)); aplicações **versionam** `uv.lock` para deploy reproduzível (template em `CLAUDE.md` / `AGENTS.md` / `GEMINI.md`).
+```bash
+uv sync --all-packages
+uv run --package sidra-fetcher pytest sidra-fetcher/tests/ -v
+uv run ruff check .
+```
 
 ---
 
@@ -75,14 +81,17 @@ A diferença prática mais visível: pacotes-biblioteca **não** versionam `uv.l
 ```
 Quantilica/              ← este repo (meta-repo / workspace)
 ├── pyproject.toml       ← configuração do uv workspace
-├── uv.lock              ← lock file compartilhado
+├── ruff.toml            ← configuração de linting (canônica para todos os pacotes)
+├── justfile             ← tarefas de desenvolvimento
+├── bootstrap.sh         ← clone + sync (Linux/macOS)
+├── bootstrap.ps1        ← clone + sync (Windows)
 ├── CLAUDE.md            ← instruções para Claude Code
 ├── AGENTS.md            ← instruções para agentes de IA
 ├── GEMINI.md            ← instruções para Gemini CLI
 ├── quantilica-core/     ← sub-repositório
 ├── quantilica-io/       ← sub-repositório
 ├── quantilica-cli/      ← sub-repositório
-├── sidra-fetcher/       ← sub-repositório
+├── quantilica-catalog/  ← sub-repositório
 └── ...
 ```
 

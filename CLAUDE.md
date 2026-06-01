@@ -14,6 +14,7 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 | `quantilica-io` | Analytical data layer: Polars DataFrames, PyArrow, Parquet I/O, schema validation |
 | `quantilica-cli` | Unified CLI with plugin architecture — discovers fetchers via `quantilica.fetchers` entry points, no hard dependencies on fetcher packages |
 | `quantilica-cloud` | CLI plugin for syncing download manifests to a cloud catalog; registered under the `quantilica.commands` entry-point group |
+| `quantilica-catalog` | Unified data catalog and canonical observation model |
 
 ### Data Fetchers
 
@@ -41,6 +42,7 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 ```
 quantilica-core  (no internal deps)
 ├── quantilica-io
+│   └── quantilica-catalog  (also depends on quantilica-io)
 ├── quantilica-cli
 │   └── quantilica-cloud  (also depends on quantilica-core)
 ├── sidra-fetcher
@@ -59,28 +61,9 @@ quantilica-core  (no internal deps)
 
 ## Application Layer
 
-Beyond the library/tool packages above, the workspace directory also holds **deployed web applications**. These are a distinct tier — different repos, different conventions — and must be treated separately.
+This workspace directory also contains **private web applications** in their own subdirectories. These are not members of the uv workspace — each has its own `uv.lock`, dependency set, and per-app conventions.
 
-| Application | Description |
-|---|---|
-| `bcb-sgs-metadata-db` | Flask + Celery + PostgreSQL + Redis app — mirrors BCB SGS metadata and time-series; admin panel, LLM reports, Telegram alerts, S3 image storage |
-| `datasus-metadata-db` | Flask + PostgreSQL app — tracks changes to DATASUS FTP file metadata over time |
-| `ibge-sidra-metadata-db` | Flask + PostgreSQL app — explorer for IBGE/SIDRA survey metadata |
-| `tddata-db` | Flask + PostgreSQL app — Tesouro Direto bond data explorer with portfolio-returns calculations |
-| `quantilica-manifests-db` | FastAPI + PostgreSQL + Redis app — multi-tenant SaaS catalog for download manifests; observability and data provenance |
-| `quantilica.github.io` | Hugo static site — the organization's GitHub Pages |
-
-### Packages vs. Applications — the two tiers
-
-| | Packages (core, io, cli, cloud, fetchers, pipelines) | Applications (`-db` apps) |
-|---|---|---|
-| Role | Reusable libraries / CLI tools | Deployed web services |
-| uv workspace member | Yes — shared `.venv`, synced by `uv sync --all-packages` | No — own `uv.lock`, own dependency set |
-| Visibility | Public (MIT) | Private |
-| Stack | Pure Python, `hatchling` | Flask/FastAPI + PostgreSQL + Redis + Docker |
-| Conventions | Strict shared: ruff `line-length 88`, Python 3.12 | Per-app — e.g. `bcb-sgs-metadata-db` uses ruff `line-length 120`; Python pin varies (3.10–3.14) |
-
-The applications sit **downstream** of the packages: they load data/metadata into PostgreSQL and expose web UIs and JSON APIs. When working inside an application directory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not assume the workspace package conventions, and do not expect `uv sync --all-packages` to install it.
+When working inside an application subdirectory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not apply workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 
 ---
 

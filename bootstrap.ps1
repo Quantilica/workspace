@@ -19,12 +19,15 @@ $workspacePackages = @(
     "rtn-fetcher"
     "tesouro-direto-fetcher"
     "bcb-sgs-fetcher"
+    "bcb-sgs-sql"
     "sidra-pipelines"
+    "bcb-sgs-pipelines"
 )
 
 $otherRepos = @(
-    @{ repo = ".github";              dir = ".github" }
-    @{ repo = "quantilica.github.io"; dir = "docs"    }
+    @{ repo = ".github";              dir = ".github"              }
+    @{ repo = "docs";                 dir = "docs"                 }
+    @{ repo = "quantilica.github.io"; dir = "quantilica.github.io" }
 )
 
 function Clone-OrPull($repo, $dir) {
