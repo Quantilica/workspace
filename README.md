@@ -23,28 +23,28 @@ Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv
 
 ### Infraestrutura
 
-| Pacote | Versão | Descrição |
-|---|---|---|
-| [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | 0.3.0 | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
-| [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | 0.2.0 | Processamento analítico: Polars, Parquet, schemas |
-| [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | 0.1.0 | CLI unificada com arquitetura de plugins via entry points |
-| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | 0.1.0 | Plugin de CLI para sincronizar manifestos com um catálogo na nuvem |
-| [`quantilica-catalog`](https://github.com/Quantilica/quantilica-catalog) | 0.1.0 | Catálogo de dados e modelo canônico de observações |
+| Pacote | Descrição |
+|---|---|
+| [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
+| [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | Processamento analítico: Polars, Parquet, schemas |
+| [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | CLI unificada com arquitetura de plugins via entry points |
+| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | Plugin de CLI para sincronizar manifestos com um catálogo na nuvem |
+| [`quantilica-catalog`](https://github.com/Quantilica/quantilica-catalog) | Catálogo de dados e modelo canônico de observações |
 
 ### Coletores de dados
 
-| Pacote | Versão | Fonte | Descrição |
-|---|---|---|---|
-| [`sidra-fetcher`](https://github.com/Quantilica/sidra-fetcher) | 0.7.0 | IBGE/SIDRA | Cliente da API de Agregados e SIDRA |
-| [`sidra-sql`](https://github.com/Quantilica/sidra-sql) | 1.3.0 | IBGE/SIDRA | Carregamento de tabelas SIDRA em PostgreSQL |
-| [`comex-fetcher`](https://github.com/Quantilica/comex-fetcher) | 2.0.0 | MDIC | Dados de comércio exterior (importação/exportação) |
-| [`datasus-fetcher`](https://github.com/Quantilica/datasus-fetcher) | 0.6.0 | DATASUS | Microdados de saúde (FTP) |
-| [`inmet-fetcher`](https://github.com/Quantilica/inmet-fetcher) | 0.2.1 | INMET | Dados meteorológicos (BDMEP) |
-| [`pdet-fetcher`](https://github.com/Quantilica/pdet-fetcher) | 0.2.0 | MTE/PDET | Microdados de trabalho (CAGED, RAIS) |
-| [`rtn-fetcher`](https://github.com/Quantilica/rtn-fetcher) | 0.2.0 | STN | Dados fiscais (RTN) |
-| [`tesouro-direto-fetcher`](https://github.com/Quantilica/tesouro-direto-fetcher) | 3.0.0 | STN | Dados do Tesouro Direto |
-| [`bcb-sgs-fetcher`](https://github.com/Quantilica/bcb-sgs-fetcher) | 0.4.0 | BCB/SGS | Séries temporais do Banco Central |
-| [`bcb-sgs-sql`](https://github.com/Quantilica/bcb-sgs-sql) | 0.1.1 | BCB/SGS | Carregamento de séries do BCB SGS em PostgreSQL |
+| Pacote | Fonte | Descrição |
+|---|---|---|
+| [`sidra-fetcher`](https://github.com/Quantilica/sidra-fetcher) | IBGE/SIDRA | Cliente da API de Agregados e SIDRA |
+| [`sidra-sql`](https://github.com/Quantilica/sidra-sql) | IBGE/SIDRA | Carregamento de tabelas SIDRA em PostgreSQL |
+| [`comex-fetcher`](https://github.com/Quantilica/comex-fetcher) | MDIC | Dados de comércio exterior (importação/exportação) |
+| [`datasus-fetcher`](https://github.com/Quantilica/datasus-fetcher) | DATASUS | Microdados de saúde (FTP) |
+| [`inmet-fetcher`](https://github.com/Quantilica/inmet-fetcher) | INMET | Dados meteorológicos (BDMEP) |
+| [`pdet-fetcher`](https://github.com/Quantilica/pdet-fetcher) | MTE/PDET | Microdados de trabalho (CAGED, RAIS) |
+| [`rtn-fetcher`](https://github.com/Quantilica/rtn-fetcher) | STN | Dados fiscais (RTN) |
+| [`tesouro-direto-fetcher`](https://github.com/Quantilica/tesouro-direto-fetcher) | STN | Dados do Tesouro Direto |
+| [`bcb-sgs-fetcher`](https://github.com/Quantilica/bcb-sgs-fetcher) | BCB/SGS | Séries temporais do Banco Central |
+| [`bcb-sgs-sql`](https://github.com/Quantilica/bcb-sgs-sql) | BCB/SGS | Carregamento de séries do BCB SGS em PostgreSQL |
 
 ### Pipelines ETL
 
