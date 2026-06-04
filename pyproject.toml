@@ -1,7 +1,7 @@
 [tool.uv.workspace]
 members = [
     "quantilica-core",
-    "quantilica-io",
+    "quantilica-analytics",
     "quantilica-cli",
     "quantilica-catalog",
     "quantilica-cloud",
@@ -19,7 +19,7 @@ members = [
 
 [tool.uv.sources]
 quantilica-core = { workspace = true }
-quantilica-io = { workspace = true }
+quantilica-analytics = { workspace = true }
 quantilica-cli = { workspace = true }
 quantilica-catalog = { workspace = true }
 quantilica-cloud = { workspace = true }
