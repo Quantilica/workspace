@@ -26,7 +26,7 @@ Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv
 | Pacote | Descrição |
 |---|---|
 | [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
-| [`quantilica-io`](https://github.com/Quantilica/quantilica-io) | Processamento analítico: Polars, Parquet, schemas |
+| [`quantilica-analytics`](https://github.com/Quantilica/quantilica-analytics) | Processamento analítico: Polars, Parquet, schemas |
 | [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | CLI unificada com arquitetura de plugins via entry points |
 | [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | Plugin de CLI para sincronizar manifestos com um catálogo na nuvem |
 | [`quantilica-catalog`](https://github.com/Quantilica/quantilica-catalog) | Catálogo de dados e modelo canônico de observações |
@@ -51,6 +51,14 @@ Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv
 | Pacote | Descrição |
 |---|---|
 | [`sidra-pipelines`](https://github.com/Quantilica/sidra-pipelines) | Catálogo declarativo de pipelines SIDRA (fetch.toml + transform.sql) |
+| [`bcb-sgs-pipelines`](https://github.com/Quantilica/bcb-sgs-pipelines) | Catálogo declarativo de pipelines BCB SGS (fetch.toml + transform.sql) |
+
+### Outros Repositórios
+
+| Repositório | Descrição |
+|---|---|
+| [`docs`](https://github.com/Quantilica/docs) | Portal de documentação pública (`docs.quantilica.com`), gerado com MkDocs |
+| [`quantilica.github.io`](https://github.com/Quantilica/quantilica.github.io) | Site institucional e landing page da Quantilica, construído com Hugo |
 
 ---
 
@@ -88,11 +96,14 @@ Quantilica/              ← este repo (meta-repo / workspace)
 ├── CLAUDE.md            ← instruções para Claude Code
 ├── AGENTS.md            ← instruções para agentes de IA
 ├── GEMINI.md            ← instruções para Gemini CLI
-├── quantilica-core/     ← sub-repositório
-├── quantilica-io/       ← sub-repositório
-├── quantilica-cli/      ← sub-repositório
-├── quantilica-catalog/  ← sub-repositório
-└── ...
+├── quantilica-core/     ← sub-repositório (infraestrutura)
+├── quantilica-analytics/ ← sub-repositório (infraestrutura)
+├── quantilica-cli/      ← sub-repositório (infraestrutura)
+├── quantilica-catalog/  ← sub-repositório (infraestrutura)
+├── sidra-pipelines/     ← sub-repositório (pipelines ETL)
+├── bcb-sgs-pipelines/   ← sub-repositório (pipelines ETL)
+├── docs/                ← sub-repositório (documentação MkDocs)
+└── quantilica.github.io/ ← sub-repositório (site Hugo)
 ```
 
 > Cada subdiretório é um repositório Git independente com seu próprio histórico e ciclo de release.

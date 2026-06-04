@@ -15,6 +15,7 @@ members = [
     "tesouro-direto-fetcher",
     "bcb-sgs-fetcher",
     "bcb-sgs-sql",
+    "docs-tests",
 ]
 
 [tool.uv.sources]
