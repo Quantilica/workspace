@@ -13,7 +13,6 @@ This is the **development workspace** for the Quantilica ecosystem: a collection
 | `quantilica-core` | Foundation layer: HTTP client (httpx), structured logging, atomic storage, SHA-256 download manifests, execution manifests for data provenance |
 | `quantilica-analytics` | Analytical data layer: Polars DataFrames, PyArrow, Parquet I/O, schema validation |
 | `quantilica-cli` | Unified CLI with plugin architecture — discovers fetchers via `quantilica.fetchers` entry points, no hard dependencies on fetcher packages |
-| `quantilica-cloud` | CLI plugin for syncing download manifests to a cloud catalog; registered under the `quantilica.commands` entry-point group |
 | `quantilica-catalog` | Unified data catalog and canonical observation model |
 
 ### Data Fetchers
@@ -44,7 +43,6 @@ quantilica-core  (no internal deps)
 ├── quantilica-analytics
 │   └── quantilica-catalog  (also depends on quantilica-analytics)
 ├── quantilica-cli
-│   └── quantilica-cloud  (also depends on quantilica-core)
 ├── sidra-fetcher
 │   └── sidra-sql
 ├── bcb-sgs-fetcher

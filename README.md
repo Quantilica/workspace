@@ -28,7 +28,6 @@ Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv
 | [`quantilica-core`](https://github.com/Quantilica/quantilica-core) | Utilitários base: HTTP, storage, logging, manifestos de proveniência |
 | [`quantilica-analytics`](https://github.com/Quantilica/quantilica-analytics) | Processamento analítico: Polars, Parquet, schemas |
 | [`quantilica-cli`](https://github.com/Quantilica/quantilica-cli) | CLI unificada com arquitetura de plugins via entry points |
-| [`quantilica-cloud`](https://github.com/Quantilica/quantilica-cloud) | Plugin de CLI para sincronizar manifestos com um catálogo na nuvem |
 | [`quantilica-catalog`](https://github.com/Quantilica/quantilica-catalog) | Catálogo de dados e modelo canônico de observações |
 
 ### Coletores de dados

@@ -8,10 +8,9 @@ BASE="https://github.com/$ORG"
 
 WORKSPACE_PACKAGES=(
     quantilica-core
-    quantilica-io
+    quantilica-analytics
     quantilica-cli
     quantilica-catalog
-    quantilica-cloud
     sidra-fetcher
     sidra-sql
     comex-fetcher

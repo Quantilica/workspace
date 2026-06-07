@@ -4,7 +4,6 @@ members = [
     "quantilica-analytics",
     "quantilica-cli",
     "quantilica-catalog",
-    "quantilica-cloud",
     "sidra-fetcher",
     "sidra-sql",
     "comex-fetcher",
@@ -23,7 +22,6 @@ quantilica-core = { workspace = true }
 quantilica-analytics = { workspace = true }
 quantilica-cli = { workspace = true }
 quantilica-catalog = { workspace = true }
-quantilica-cloud = { workspace = true }
 sidra-fetcher = { workspace = true }
 sidra-sql = { workspace = true }
 bcb-sgs-fetcher = { workspace = true }
