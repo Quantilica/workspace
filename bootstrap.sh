@@ -29,6 +29,11 @@ OTHER_REPOS=(
     ".github:.github"
     "docs:docs"
     "quantilica.github.io:quantilica.github.io"
+    "branding:branding"
+    "bcb-sgs-metadata-db:bcb-sgs-metadata-db"
+    "datasus-metadata-db:datasus-metadata-db"
+    "ibge-sidra-metadata-db:ibge-sidra-metadata-db"
+    "tddata-db:tddata-db"
 )
 
 clone_or_pull() {

@@ -27,6 +27,11 @@ $otherRepos = @(
     @{ repo = ".github";              dir = ".github"              }
     @{ repo = "docs";                 dir = "docs"                 }
     @{ repo = "quantilica.github.io"; dir = "quantilica.github.io" }
+    @{ repo = "branding";             dir = "branding"             }
+    @{ repo = "bcb-sgs-metadata-db";  dir = "bcb-sgs-metadata-db"  }
+    @{ repo = "datasus-metadata-db";  dir = "datasus-metadata-db"  }
+    @{ repo = "ibge-sidra-metadata-db"; dir = "ibge-sidra-metadata-db" }
+    @{ repo = "tddata-db";            dir = "tddata-db"            }
 )
 
 function Clone-OrPull($repo, $dir) {

@@ -58,6 +58,11 @@ Isso clona cada sub-repositório dentro deste diretório e cria um único `.venv
 |---|---|
 | [`docs`](https://github.com/Quantilica/docs) | Portal de documentação pública (`docs.quantilica.com`), gerado com MkDocs |
 | [`quantilica.github.io`](https://github.com/Quantilica/quantilica.github.io) | Site institucional e landing page da Quantilica, construído com Hugo |
+| [`branding`](https://github.com/Quantilica/branding) | Identidade visual: logos, paleta de cores, tipografia e assets de marketing |
+| [`bcb-sgs-metadata-db`](https://github.com/Quantilica/bcb-sgs-metadata-db) | Banco de metadados das séries do BCB SGS |
+| [`datasus-metadata-db`](https://github.com/Quantilica/datasus-metadata-db) | Banco de metadados das bases do DATASUS |
+| [`ibge-sidra-metadata-db`](https://github.com/Quantilica/ibge-sidra-metadata-db) | Banco de metadados das tabelas IBGE/SIDRA |
+| [`tddata-db`](https://github.com/Quantilica/tddata-db) | Banco de dados do Tesouro Direto |
 
 ---
 
@@ -102,7 +107,12 @@ Quantilica/              ← este repo (meta-repo / workspace)
 ├── sidra-pipelines/     ← sub-repositório (pipelines ETL)
 ├── bcb-sgs-pipelines/   ← sub-repositório (pipelines ETL)
 ├── docs/                ← sub-repositório (documentação MkDocs)
-└── quantilica.github.io/ ← sub-repositório (site Hugo)
+├── quantilica.github.io/ ← sub-repositório (site Hugo)
+├── branding/            ← sub-repositório (identidade visual)
+├── bcb-sgs-metadata-db/ ← sub-repositório (metadados BCB SGS)
+├── datasus-metadata-db/ ← sub-repositório (metadados DATASUS)
+├── ibge-sidra-metadata-db/ ← sub-repositório (metadados IBGE/SIDRA)
+└── tddata-db/           ← sub-repositório (Tesouro Direto data)
 ```
 
 > Cada subdiretório é um repositório Git independente com seu próprio histórico e ciclo de release.
