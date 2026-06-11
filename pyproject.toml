@@ -26,3 +26,8 @@ sidra-fetcher = { workspace = true }
 sidra-sql = { workspace = true }
 bcb-sgs-fetcher = { workspace = true }
 bcb-sgs-sql = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "pyright>=1.1.410",
+]
