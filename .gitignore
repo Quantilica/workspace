@@ -29,6 +29,9 @@ quantilica-catalog/
 uv.lock
 *.log
 
+# Credenciais de infraestrutura (nunca commitar)
+*.local
+
 # Claude settings
 .claude/
 

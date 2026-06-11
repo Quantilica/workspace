@@ -63,6 +63,10 @@ This workspace directory also contains **private web applications** in their own
 
 When working inside an application subdirectory, follow **that repo's own** `CLAUDE.md` and `ruff` config — do not apply workspace package conventions, and do not expect `uv sync --all-packages` to install it.
 
+### Authentication standard (apps)
+
+The four web apps with user accounts (`bcb-sgs-metadata-db`, `ibge-sidra-metadata-db`, `datasus-metadata-db`, `tddata-db`) share a canonical login/registration standard: Argon2id hashing, `usuario` table with Portuguese columns, email login, `/login` `/logout` `/cadastro` routes, and a security baseline (rate-limit, anti-enumeration, safe redirects). See [`docs-internal/autenticacao.md`](docs-internal/autenticacao.md) for the full standard and per-app migration guide. This is an internal doc and is **not** part of the public MkDocs site.
+
 ---
 
 ## uv Workspace

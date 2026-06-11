@@ -26,3 +26,12 @@ fmt-check:
 
 # Run lint + format check
 check: lint fmt-check
+
+# Pull all git repositories in the workspace (root and all sub-packages)
+pull:
+    find . -maxdepth 2 -name .git -exec sh -c 'echo "Pulling $(dirname "{}")..."; git -C "$(dirname "{}")" pull' \;
+
+
+
+
+
